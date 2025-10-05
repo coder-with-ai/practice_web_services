@@ -1,0 +1,101 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Fun Facts</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Use the Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* A subtle animation for the fact card appearing */
+        .fact-card-animate {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl text-center">
+        <!-- Main Title -->
+        <header class="mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Cloud & Tech Facts</h1>
+            <p class="text-gray-500 mt-2">A simple app ready for Azure App Service!</p>
+        </header>
+
+        <!-- Fact Display Card -->
+        <main id="fact-container" class="bg-white rounded-xl shadow-lg p-8 md:p-12 min-h-[200px] flex items-center justify-center">
+            <p id="fact-text" class="text-xl md:text-2xl font-medium text-gray-700"></p>
+        </main>
+
+        <!-- New Fact Button -->
+        <footer class="mt-8">
+            <button id="new-fact-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-all duration-300 transform hover:scale-105">
+                Show Me a New Fact
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        const factTextElement = document.getElementById('fact-text');
+        const newFactButton = document.getElementById('new-fact-btn');
+        const factContainer = document.getElementById('fact-container');
+
+        // An array of facts to display
+        const facts = [
+            "Azure was announced in 2008 and was initially codenamed 'Project Red Dog'.",
+            "The name Azure means 'sky blue', reflecting the concept of cloud computing.",
+            "Azure runs on a global network of Microsoft-managed datacenters across 60+ regions.",
+            "The first version of the C# programming language was designed by Anders Hejlsberg, who also created TypeScript.",
+            "An exabyte of data is equivalent to 1,000 petabytes or one quintillion bytes. Cloud providers manage many exabytes of data.",
+            "The term 'bug' for a computer glitch was popularized after a real moth was found in a computer relay in 1947.",
+            "Azure App Service can automatically scale your application based on CPU usage, memory, or HTTP queue length.",
+            "Linux is the most popular operating system on Azure, running on over 60% of Virtual Machines.",
+            "The world's first web page, created by Tim Berners-Lee, went live in 1991.",
+            "Azure Static Web Apps is a service specifically designed to host modern web apps built with frameworks like React, Angular, or Vue.",
+            "About 95% of Fortune 500 companies use Microsoft Azure for their cloud services.",
+            "Serverless computing, like Azure Functions, allows you to run code without provisioning or managing servers."
+        ];
+
+        let currentFactIndex = -1;
+
+        // Function to display a new, random fact
+        function displayNewFact() {
+            let newIndex;
+            // Ensure the new fact is different from the current one
+            do {
+                newIndex = Math.floor(Math.random() * facts.length);
+            } while (facts.length > 1 && newIndex === currentFactIndex);
+            
+            currentFactIndex = newIndex;
+            const fact = facts[currentFactIndex];
+            
+            // Add animation class
+            factContainer.classList.remove('fact-card-animate');
+            // A trick to re-trigger the animation
+            void factContainer.offsetWidth; 
+            factContainer.classList.add('fact-card-animate');
+
+            factTextElement.textContent = fact;
+        }
+
+        // Event listener for the button
+        newFactButton.addEventListener('click', displayNewFact);
+
+        // Display the first fact when the page loads
+        document.addEventListener('DOMContentLoaded', displayNewFact);
+    </script>
+
+</body>
+</html>
